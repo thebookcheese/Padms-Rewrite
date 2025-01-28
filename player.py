@@ -7,20 +7,27 @@ class Player:
         self.Gold = 0
 
         self.PlayerHealth = 100
-        BaseAttack = 3
-        BaseDefense = 1
+        self.BaseAttack = 3
+        self.BaseDefense = 1
         self.equippedinventory = {
             'Rusty Sword': {
-                'Attack': 1, 
-                'Class': 'Sword'
+                'Attack': 1,
+                'TimesBlacksmithUsed' : 0,
+                'Class': 'Sword',
+                'Type': 'Weapon',
             },
             'Light Shield': {
                 'Attack': 1,
                 'Defense': 2, 
-                'Class': 'Shield'
+                'TimesBlacksmithUsed' : 0,
+                'Class': 'Shield',
+                'Type': 'Shield',
             }
         }
         self.equippedinventorylist = ['Rusty Sword','Light Shield']
+        self.unequippedinventory = {
+
+        }
         TotalAttack = 0
         TotalDefense = 0
         self.attacks = {
@@ -33,25 +40,38 @@ class Player:
                 TotalAttack = TotalAttack + self.equippedinventory[key]['Attack']
             if 'Defense' in self.equippedinventory[key]:
                 TotalDefense = TotalDefense + self.equippedinventory[key]['Defense']
-        self.TotalAttack = TotalAttack + BaseAttack
-        self.TotalDefense = TotalDefense + BaseDefense
+        self.TotalAttack = TotalAttack + self.BaseAttack
+        self.TotalDefense = TotalDefense + self.BaseDefense
     
     def Stab(self):
-        damage = random.randint(self.TotalAttack-3, self.TotalAttack + 3)
+        StabAttack = 0
+        for key in self.equippedinventory:
+            if 'Attack' in self.equippedinventory[key] and key['Class'] in self.attacks['Stab']:
+                StabAttack = StabAttack + self.equippedinventory[key]['Attack']
         hitchance = 75
+        StabAttack = StabAttack + self.BaseAttack
+        damage = random.randint(StabAttack, StabAttack + 3)
         if damage < 0 or random.randint(1,100) > hitchance:
             damage = 0
             print("You missed!")
         return damage
 
     def Slash(self):
-        damage = random.randint(self.TotalAttack-1, self.TotalAttack + 1)
+        SlashAttack = 0
+        for key in self.equippedinventory:
+            if 'Attack' in self.equippedinventory[key] and key['Class'] in self.attacks['Slash']:
+                SlashAttack = SlashAttack + self.equippedinventory[key]['Attack']
         hitchance = 85
-        if damage < 0 or random.randint(1,100) > hitchance:
+        damage = random.randint(SlashAttack, SlashAttack + 3)
+        if damage <= 0 or random.randint(1,100) > hitchance:
             damage = 0
             print("You missed!")
         return damage
     
     def ShieldBash(self):
-        damage = random.randint(self.TotalAttack - 2, self.TotalAttack)
+        BashAttack = 0
+        for key in self.equippedinventory:
+            if 'Attack' in self.equippedinventory[key] and key['Class'] in self.attacks['ShieldBash']:
+                BashAttack = BashAttack + self.equippedinventory[key]['Attack']
+        damage = random.randint(BashAttack - 2, BashAttack)
         return damage

@@ -44,7 +44,7 @@ def main(player):
                         print(f"You dealt {damage} damage; the slime is now on {slime.SlimeHealth} health")
                     
                     Sdamage = slime.SlimeJump()
-                    player.PlayerHealth = player.PlayerHealth - Sdamage
+                    player.PlayerHealth = player.PlayerHealth - (Sdamage-player.TotalDefense)
                     print(f"You have taken {Sdamage} damage from the slime; you are now on {player.PlayerHealth} health")
                 elif Action == 2:
                     break
@@ -97,7 +97,7 @@ def main(player):
                         Attack = random.randint(1,2)
                         if Attack == 1:
                             Sdamage = rslime.RSlimeJump()
-                            player.PlayerHealth = player.PlayerHealth - Sdamage
+                            player.PlayerHealth = player.PlayerHealth - (Sdamage-player.TotalDefense)
                             print(f"You have taken {Sdamage} damage from the slime; you are now on {player.PlayerHealth} health")
                         elif Attack == 2:
                             HardenActive = rslime.RSlimeHarden()
