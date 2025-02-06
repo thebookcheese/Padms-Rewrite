@@ -7,7 +7,6 @@ def main(player):
     if Action == 2:
         import main
     AvailableAttacks = []
-    count = 0
     for i in range(len(player.equippedinventorylist)):
         for key in player.attacks:
             if player.equippedinventory[player.equippedinventorylist[i-1]]['Class'] in player.attacks[key]:
@@ -44,8 +43,11 @@ def main(player):
                         print(f"You dealt {damage} damage; the slime is now on {slime.SlimeHealth} health")
                     
                     Sdamage = slime.SlimeJump()
-                    player.PlayerHealth = player.PlayerHealth - (Sdamage-player.TotalDefense)
-                    print(f"You have taken {Sdamage} damage from the slime; you are now on {player.PlayerHealth} health")
+                    if Sdamage-player.TotalDefense <= 0:
+                        print("You are too strong for the slime to damage you")
+                    else:
+                        player.PlayerHealth = player.PlayerHealth - (Sdamage-player.TotalDefense)
+                        print(f"You have taken {Sdamage-player.TotalDefense} damage from the slime; you are now on {player.PlayerHealth} health")
                 elif Action == 2:
                     break
                 
@@ -97,8 +99,11 @@ def main(player):
                         Attack = random.randint(1,2)
                         if Attack == 1:
                             Sdamage = rslime.RSlimeJump()
-                            player.PlayerHealth = player.PlayerHealth - (Sdamage-player.TotalDefense)
-                            print(f"You have taken {Sdamage} damage from the slime; you are now on {player.PlayerHealth} health")
+                            if (Sdamage - player.TotalDefense) <= 0:
+                                print("You are too strong for the slime to damage you")
+                            else:
+                                player.PlayerHealth = player.PlayerHealth - (Sdamage-player.TotalDefense)
+                                print(f"You have taken {Sdamage-player.TotalDefense} damage from the slime; you are now on {player.PlayerHealth} health")
                         elif Attack == 2:
                             HardenActive = rslime.RSlimeHarden()
                 
@@ -113,8 +118,8 @@ def main(player):
                     GoldGained = random.randint(10,30)
                     player.Gold = player.Gold + GoldGained
                     print(f"You gained {GoldGained} gold, you now have {player.Gold} gold")
-                    break
-                Action = int(input("Do you want to: \nFight (1) \nRun (2)"))
+                    Action = int(input("Do you want to: \nStay (1) \nLeave (2)"))
+                Action = int(input("Do you want to: \nStay (1) \nLeave (2)"))
             else:
                 break
 

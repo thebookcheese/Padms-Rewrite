@@ -15,6 +15,8 @@ class Player:
                 'TimesBlacksmithUsed' : 0,
                 'Class': 'Sword',
                 'Type': 'Weapon',
+                'Rarity' : 'Common',
+                'AttackType' : 'Single',
             },
             'Light Shield': {
                 'Attack': 1,
@@ -22,12 +24,15 @@ class Player:
                 'TimesBlacksmithUsed' : 0,
                 'Class': 'Shield',
                 'Type': 'Shield',
+                'AttackType': 'Single',
+                'Rarity': 'Common',
             }
         }
         self.equippedinventorylist = ['Rusty Sword','Light Shield']
         self.unequippedinventory = {
 
         }
+        self.unequippedinventorylist = []
         TotalAttack = 0
         TotalDefense = 0
         self.attacks = {
@@ -42,11 +47,13 @@ class Player:
                 TotalDefense = TotalDefense + self.equippedinventory[key]['Defense']
         self.TotalAttack = TotalAttack + self.BaseAttack
         self.TotalDefense = TotalDefense + self.BaseDefense
+        self.TimesShopUsed = 0
+        self.CurrentSelection = []
     
     def Stab(self):
         StabAttack = 0
         for key in self.equippedinventory:
-            if 'Attack' in self.equippedinventory[key] and key['Class'] in self.attacks['Stab']:
+            if 'Attack' in self.equippedinventory[key] and self.equippedinventory[key]['Class'] in self.attacks['Stab']:
                 StabAttack = StabAttack + self.equippedinventory[key]['Attack']
         hitchance = 75
         StabAttack = StabAttack + self.BaseAttack
@@ -59,7 +66,7 @@ class Player:
     def Slash(self):
         SlashAttack = 0
         for key in self.equippedinventory:
-            if 'Attack' in self.equippedinventory[key] and key['Class'] in self.attacks['Slash']:
+            if 'Attack' in self.equippedinventory[key] and self.equippedinventory[key]['Class'] in self.attacks['Slash']:
                 SlashAttack = SlashAttack + self.equippedinventory[key]['Attack']
         hitchance = 85
         damage = random.randint(SlashAttack, SlashAttack + 3)
@@ -71,7 +78,7 @@ class Player:
     def ShieldBash(self):
         BashAttack = 0
         for key in self.equippedinventory:
-            if 'Attack' in self.equippedinventory[key] and key['Class'] in self.attacks['ShieldBash']:
+            if 'Attack' in self.equippedinventory[key] and self.equippedinventory[key]['Class'] in self.attacks['ShieldBash']:
                 BashAttack = BashAttack + self.equippedinventory[key]['Attack']
         damage = random.randint(BashAttack - 2, BashAttack)
         return damage
